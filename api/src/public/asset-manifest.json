@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.js": "/static/js/main.43192e02.chunk.js",
+    "main.js.map": "/static/js/main.43192e02.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.a4a9bedc.js",
+    "runtime-main.js.map": "/static/js/runtime-main.a4a9bedc.js.map",
+    "static/css/2.09765660.chunk.css": "/static/css/2.09765660.chunk.css",
+    "static/js/2.1f914bf4.chunk.js": "/static/js/2.1f914bf4.chunk.js",
+    "static/js/2.1f914bf4.chunk.js.map": "/static/js/2.1f914bf4.chunk.js.map",
+    "static/js/3.acfbf2a2.chunk.js": "/static/js/3.acfbf2a2.chunk.js",
+    "static/js/3.acfbf2a2.chunk.js.map": "/static/js/3.acfbf2a2.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.09765660.chunk.css.map": "/static/css/2.09765660.chunk.css.map",
+    "static/js/2.1f914bf4.chunk.js.LICENSE.txt": "/static/js/2.1f914bf4.chunk.js.LICENSE.txt",
+    "static/media/logo-rede.745fc4e6.png": "/static/media/logo-rede.745fc4e6.png",
+    "static/media/logo.09737b2c.svg": "/static/media/logo.09737b2c.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a4a9bedc.js",
+    "static/css/2.09765660.chunk.css",
+    "static/js/2.1f914bf4.chunk.js",
+    "static/js/main.43192e02.chunk.js"
+  ]
+}
