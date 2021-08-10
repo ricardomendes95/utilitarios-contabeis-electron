@@ -10,13 +10,57 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    <link href="./style.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
       rel="stylesheet"
     />
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        /* outline: 0; */
+      }
+      body {
+        margin: 0;
+        font-size: 1.2rem;
+        font-family: "Roboto Condensed", sans-serif;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      #title {
+        font-size: 1.7rem;
+        font-weight: 800;
+        margin-top: 5%;
+        margin-bottom: 5%;
+      }
+
+      #center {
+        display: flex;
+        justify-content: center;
+      }
+
+      #item {
+        max-width: 30px;
+      }
+
+      #emp p {
+        margin: 0;
+      }
+
+      #spaceItem {
+        /* margin-top: 20px; */
+        margin-bottom: 10px;
+      }
+
+      footer {
+        margin-top: 5%;
+      }
+    </style>
 
     <title>Carta de Responsabilidade da Administração</title>
   </head>
@@ -25,49 +69,61 @@
       <div class="row mt-0 mb-0">
         <div class="col-sm-9">
           <div class="row">
-            <p class="mb-0"><b>Empresa:</b> nome da empresa mocado</p>
+            <p class="mb-0"><b>Empresa:</b> <%= office.razaoCliente %></p>
           </div>
           <div class="row">
-            <p class="mb-0">CNPJ: 39.657.446/0001-29</p>
+            <p class="mb-0">
+              CNPJ: <%= office.cnpjCliente.replace(/\D/g,
+              '').replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/,
+              "$1.$2.$3/$4-$5"); %>
+            </p>
           </div>
         </div>
         <div class="col-sm">
           <div class="row">
             <div class="col">
               <p class="mb-0">Folha:</p>
+              <% if (office.checkBookNumber) { %>
               <p class="mb-0">Número livro:</p>
+              <% } %> <% if (office.checkEmissionDate) { %>
               <p class="mb-0">Emissão:</p>
               <p class="mb-0">Hora:</p>
+              <% } %>
             </div>
             <div class="col">
               <p class="mb-0">0001</p>
-              <p class="mb-0">00001</p>
-              <p class="mb-0">10/10/2020</p>
-              <p class="mb-0">55:22:55</p>
+              <% if (office.checkBookNumber) { %>
+              <p class="mb-0"><%= office.bookNumber %></p>
+              <% } %> <% if (office.checkEmissionDate) { %>
+              <p class="mb-0"><%= new Date().toLocaleDateString() %></p>
+              <p class="mb-0"><%= new Date().toLocaleTimeString() %></p>
+              <% } %>
             </div>
           </div>
         </div>
       </div>
-      <div class="row" id="spaceItem">
+      <div class="row">
         <div class="col" id="center">
           <h1 id="title">CARTA DE RESPONSABILIDADE DA ADMINISTRAÇÃO</h1>
         </div>
       </div>
-      <div class="row" id="spaceItem">
+      <div class="row">
         <div class="col-11" style="display: flex; justify-content: flex-end">
-          <span>CARUARU, 31/12/2020 </span>
+          <span
+            >CARUARU, <%= new Date(office.endDate).toLocaleDateString() %>
+          </span>
         </div>
       </div>
       <div class="row" id="spaceItem">
         <div class="col" id="emp">
           <p style="margin-bottom: 10px">À</p>
-          <p>TIAGO COSTA MOURA EIRELI</p>
-          <p>CRC n.º PE029602O6</p>
+          <p><%= office.razao %></p>
+          <p>CRC n.º <%= office.crcContador %></p>
           <p>
-            Endereço: Rua SILVINO MACEDO, nº 66, MAURICIO DE NASSAU, CEP nº
-            55012-380
+            Endereço: <%= office.typeAdress %> <%= office.adress %>, nº <%=
+            office.number %>, <%= office.district %>, CEP nº <%= office.cep %>
           </p>
-          <p>CARUARU, PE</p>
+          <p><%= office.county %>, <%= office.uf %></p>
         </div>
       </div>
       <div class="row" id="spaceItem">
@@ -79,8 +135,11 @@
         <div class="col">
           <p>
             Declaramos para os devidos fins, como administrador e responsável
-            legal da empresa RAFAEL S SALES EIRELI, CNPJ 37.742.369/0001-80, que
-            as informações relativas ao período base 31/12/2020, fornecidas a
+            legal da empresa <%= office.razaoCliente %>, CNPJ <%=
+            office.cnpjCliente.replace(/\D/g,
+            '').replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/,
+            "$1.$2.$3/$4-$5"); %>, que as informações relativas ao período base
+            <%= new Date(office.endDate).toLocaleDateString() %>, fornecidas a
             Vossas Senhorias para escrituração e elaboração das demonstrações
             contábeis, obrigações acessórias, apuração de impostos e arquivos
             eletrônicos exigidos pela fiscalização federal, estadual, municipal,
@@ -135,7 +194,8 @@
           <p>
             que os estoques registrados em conta própria foram por nós
             avaliados, contados e levantados fisicamente e perfazem a realidade
-            do período encerrado em 2020;
+            do período encerrado em <%= new Date(office.endDate).getFullYear();
+            %>
           </p>
         </div>
       </div>
@@ -146,8 +206,8 @@
         <div class="col">
           <p>
             que as informações registradas no sistema de gestão e controle
-            interno, denominado SERVENTIA, são controladas e validadas com
-            documentação suporte adequada, sendo de nossa inteira
+            interno, denominado <%= office.systemGestor %>, são controladas e
+            validadas com documentação suporte adequada, sendo de nossa inteira
             responsabilidade todo o conteúdo do banco de dados e arquivos
             eletrônicos gerados.
           </p>
@@ -211,12 +271,16 @@
         </div>
         <div class="row">
           <div class="col" id="center">
-            <span>nome do cliente completo</span>
+            <span><%= office.responsavelLegCliente %></span>
           </div>
         </div>
         <div class="row">
           <div class="col" style="display: flex; justify-content: center">
-            <span>cpf do cliente</span>
+            <span
+              ><%= office.cpfLegCliente.replace(/\D/g,
+              '').replace(/^(\d{3})(\d{3})?(\d{3})?(\d{2})?/, "$1.$2.$3-$4");
+              %></span
+            >
           </div>
         </div>
       </footer>

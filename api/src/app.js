@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const relatoriosRouter = require("./routes/relatorios");
+const configRouter = require("./routes/configs");
 
 const app = express();
 app.use(cors());
@@ -13,5 +14,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/reports", relatoriosRouter);
+app.use("/config", configRouter);
 
 app.listen(3001, () => console.log("app rodando na porta 3001"));
