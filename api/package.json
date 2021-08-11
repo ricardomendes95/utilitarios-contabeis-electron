@@ -1,7 +1,7 @@
 {
   "name": "serve",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/app.js",
   "license": "MIT",
   "scripts": {
     "start": "node ./src/app.js"

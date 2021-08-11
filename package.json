@@ -2,16 +2,30 @@
   "name": "reactnodeElectron",
   "version": "1.0.0",
   "main": "index.js",
+  "author": "ricardo mendes",
   "license": "MIT",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder",
+    "package": "electron-builder --dir",
+    "compile": "electron-webpack",
+    "dist": "yarn compile && electron-builder",
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "devDependencies": {
     "electron": "^13.1.7",
-    "electron-builder": "^22.11.7"
+    "electron-builder": "^22.11.7",
+    "electron-webpack": "^2.8.2",
+    "webpack": "^5.50.0"
   },
   "dependencies": {
     "ejs": "^3.1.6",
     "express-generator": "^4.16.1"
+  },
+  "build": {
+    "appId": "ricardo.relatorio",
+    "mac": {
+      "category": "riardo.relatorio"
+    }
   }
 }
