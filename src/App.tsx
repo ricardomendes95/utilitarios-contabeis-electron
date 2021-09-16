@@ -6,6 +6,7 @@ import './App.global.css';
 import Home from './pages/Home';
 import Config from './pages/Config';
 import CartaResponsabilidade from './pages/CartaResponsabilidade';
+import XlsxToOfx from './pages/XlsxToOfx';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
             component={CartaResponsabilidade}
           />
           <Route path="/config" component={Config} />
+          <Route path="/xlsxToOfx" component={XlsxToOfx} />
         </Switch>
       </Router>
     </>

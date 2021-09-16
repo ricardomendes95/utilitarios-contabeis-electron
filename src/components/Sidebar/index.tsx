@@ -1,7 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Layout, Menu, Tooltip } from 'antd';
-import { FilePdfOutlined, SettingOutlined } from '@ant-design/icons';
+import {
+  FilePdfOutlined,
+  SettingOutlined,
+  SyncOutlined,
+} from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { Logo } from './style';
 
@@ -10,7 +14,7 @@ import logo from '../../assets/img/logo.svg';
 const { Footer, Sider, Content } = Layout;
 
 interface MenuProps {
-  selected?: '1' | '9' | '3';
+  selected?: '1' | '9' | '3' | '4';
   open?: 'sub1' | 'none';
   children: React.ReactNode;
 }
@@ -66,7 +70,9 @@ const Sidebar: React.FC<MenuProps> = ({
                 </Menu.Item>
               </Tooltip>
             </Menu.SubMenu>
-
+            <Menu.Item key="4" icon={<SyncOutlined />}>
+              <Link to="/xlsxToOfx"> XLSX para OFX</Link>
+            </Menu.Item>
             <Menu.Item key="9" icon={<SettingOutlined />}>
               <Link to="/config">Configurações</Link>
             </Menu.Item>
