@@ -1,4 +1,4 @@
-export * as CartaResponsabilidadeService from './cartaResponsabilidade'
-export * as ConfigService from './config'
-export * as XlsxToOfxService from './xlsxToOfx'
-
+export * as CartaResponsabilidadeService from './cartaResponsabilidade';
+export * as ConfigService from './config';
+export * as XlsxToOfxService from './xlsxToOfx';
+export * as BillsToPayService from './BillsToPay';

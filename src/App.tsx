@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Config from './pages/Config';
 import CartaResponsabilidade from './pages/CartaResponsabilidade';
 import XlsxToOfx from './pages/XlsxToOfx';
+import BillsToPay from './pages/BIllsToPay';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           />
           <Route path="/config" component={Config} />
           <Route path="/xlsxToOfx" component={XlsxToOfx} />
+          <Route path="/billsToPay" component={BillsToPay} />
         </Switch>
       </Router>
     </>

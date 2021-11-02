@@ -3,28 +3,47 @@
 /* eslint-disable func-names */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BrowserWindow } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import fs from 'fs';
+import axios from 'axios';
+import path from 'path';
 import { renderEjs } from '../utils/ejsUtil';
 import Definitions from '../../core/types';
-import api from '../../services/api';
 
 export default class ResponsabilityLatterController {
   constructor(private window: BrowserWindow) {}
 
+  getFilePath = () => path.join(app.getPath('userData'), 'config-server.json');
+
   generateReportPDF = async (form: Definitions['CartaResponsabilidade']) => {
+    console.log('entrou aqui');
+    const filePath = this.getFilePath();
+    if (!fs.existsSync(filePath)) {
+      fs.writeFileSync(filePath, JSON.stringify({ ipDominio: '' }));
+    }
+
+    const fileContent = fs.readFileSync(filePath);
+
+    const { ipDominio } = JSON.parse(fileContent.toString());
+
+    const baseURL = `http://${ipDominio}:8080`;
+    const dominioApi = axios.create({ baseURL });
+
     try {
       const { registrationData, crc, startDate, endDate, saveLocation } = form;
-      const companiesResponse = await api.get('/reports/companies', {
-        params: {
-          registrationData,
-          crc,
-          startDate,
-          endDate,
-        },
-      });
 
-      const companies = companiesResponse.data;
+      let lastUpdateDate = new Date();
+      if (registrationData === 'inicial') {
+        lastUpdateDate = startDate;
+      } else if (registrationData === 'final') {
+        lastUpdateDate = endDate;
+      }
+
+      const result = await dominioApi.get(
+        `responsabilityLetter?lastUpdateDate=${lastUpdateDate.toISOString()}&crcType=${crc}`
+      );
+
+      const companies = result.data;
 
       const pdfErrors = [];
 

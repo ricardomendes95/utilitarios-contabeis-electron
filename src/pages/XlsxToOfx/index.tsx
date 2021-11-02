@@ -1,16 +1,29 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
+import {
+  Card,
+  Input,
+  Button,
+  Col,
+  Row,
+  Table,
+  notification,
+  Modal,
+} from 'antd';
 import Sidebar from '../../components/Sidebar';
-import { Card, Form, Input, Button, Col, Row, Table } from 'antd';
 import * as S from './style';
 import ChooseDirectoryService from '../../services/chooseDirectory';
+import ChooseFileService from '../../services/chooseFile';
 import { XlsxToOfxService } from '../../services';
 import { GetXlsxToOfxResponse } from '../../services/xlsxToOfx/types';
 
 const XlsxToOfx = () => {
   const [saveLocation, setSaveLocation] = useState('');
+  const [fileLocation, setFileLocation] = useState('');
   const [danger, setDanger] = useState(false);
-  const [directory, setDirectory] = useState('');
   const [list, setList] = useState<GetXlsxToOfxResponse[]>();
+
+  const { Search } = Input;
 
   async function handleDirectory() {
     try {
@@ -21,7 +34,35 @@ const XlsxToOfx = () => {
       console.log(error);
     }
   }
-  function handleConvert() {}
+  async function handleFile() {
+    try {
+      const result = await ChooseFileService.openChooseFile();
+
+      setFileLocation(result.length === 0 ? saveLocation : result[0]);
+    } catch (error) {
+      Modal.error({
+        content: `Erro ao abrir o Arquivo: ${error}`,
+      });
+    }
+  }
+  async function handleConvert() {
+    const data = {
+      saveDirectory: saveLocation,
+      fileDirectory: fileLocation,
+    };
+
+    const result = await XlsxToOfxService.convertOfx(data);
+
+    if (result.Sucess) {
+      Modal.success({
+        content: `Arquivo ofx foi criado com sucesso no: ${saveLocation}`,
+      });
+    } else {
+      Modal.error({
+        content: `Erro ao criar o Arquivo: ${result}`,
+      });
+    }
+  }
 
   const columns = [
     {
@@ -46,22 +87,24 @@ const XlsxToOfx = () => {
     },
   ];
 
-  async function changeTable() {
-    //resolva
-    const result = await XlsxToOfxService.getXlsxToOfx('teste');
-    const { data } = result;
-    if (data) {
-      setList(data);
-    }
+  function changeTable() {
+    XlsxToOfxService.read(fileLocation)
+      .then((result) => {
+        return setList(result);
+      })
+      .catch((e) => {
+        notification.error({
+          message: 'Erro ao Enviar Arquivo',
+          description: e,
+        });
+      });
   }
 
   useEffect(() => {
-    if (directory !== '') {
-      console.log(directory);
-
+    if (fileLocation !== '') {
       changeTable();
     }
-  }, [directory]);
+  }, [fileLocation]);
 
   return (
     <Sidebar selected="4">
@@ -71,10 +114,13 @@ const XlsxToOfx = () => {
             <Col>
               <S.InputField>
                 <label>Selecione o Arquivo XLSX:</label>
-                <Input
-                  type="file"
-                  value={directory}
-                  onChange={(event) => setDirectory(event?.target.value)}
+                <Search
+                  placeholder="ex: C:\Temp"
+                  allowClear
+                  enterButton="Procurar"
+                  size="large"
+                  onSearch={handleFile}
+                  value={fileLocation}
                 />
               </S.InputField>
             </Col>

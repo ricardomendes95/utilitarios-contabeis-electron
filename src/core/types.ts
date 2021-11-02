@@ -31,6 +31,7 @@ export default interface Definitions {
     municipio?: string;
     uf?: string;
     cep?: string;
+    idEmp?: string;
   };
   ConfigIpDominio: {
     ipServer?: string;
@@ -38,9 +39,9 @@ export default interface Definitions {
   XlsxToOfx: {
     Movimentacao?: string;
     Tipo?: string;
-    Valor?: number;
-    SaldoAntes?: number;
-    SaldoDepois?: number;
+    Valor?: string;
+    SaldoAntes?: string;
+    SaldoDepois?: string;
     Tarifa?: string;
     Data?: string;
     Situacao?: string;
@@ -54,5 +55,30 @@ export default interface Definitions {
     OrigemInstituicao?: string;
     OrigemAgencia?: string;
     OrigemConta?: string;
+  };
+  BillsToPay: {
+    codi_FOR?: number;
+    qry_forn?: string;
+    nume_ENT?: string;
+    qry_emissao?: string;
+    qry_entrada?: string;
+    qry_vencmto?: string;
+    VBRU?: number;
+  };
+
+  BillsToPayRequest: {
+    ipDominio: string;
+    date: string;
+    idEmp: string;
+  };
+  BillsToPayRequestDoc: {
+    company: Definitions['CompanyResponsabilityLatter'];
+    date: string;
+    billsToPays: Definitions['BillsToPay'][];
+    typeDoc: string;
+    saveLocation: string;
+  };
+  getCompany: {
+    id: string;
   };
 }

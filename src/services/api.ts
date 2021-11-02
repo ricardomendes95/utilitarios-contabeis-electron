@@ -1,5 +1,10 @@
-import axios from 'axios'
+import axios from 'axios';
+import ConfigIPServerController from '../backend/controllers/ConfigIPServerController';
 
-const api = axios.create({ baseURL: 'http://localhost:3001' })
+const configIPServerController = new ConfigIPServerController();
+const ip = configIPServerController.getConfigServerData;
+const api = axios.create({
+  baseURL: `http://${ip}:8080`,
+});
 
-export default api
+export default api;
