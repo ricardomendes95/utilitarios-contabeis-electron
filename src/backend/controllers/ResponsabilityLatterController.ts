@@ -9,6 +9,7 @@ import axios from 'axios';
 import path from 'path';
 import { renderEjs } from '../utils/ejsUtil';
 import Definitions from '../../core/types';
+import ConfigIPServerController from './ConfigIPServerController';
 
 export default class ResponsabilityLatterController {
   constructor(private window: BrowserWindow) {}
@@ -16,15 +17,18 @@ export default class ResponsabilityLatterController {
   getFilePath = () => path.join(app.getPath('userData'), 'config-server.json');
 
   generateReportPDF = async (form: Definitions['CartaResponsabilidade']) => {
+    const configIpServerController = new ConfigIPServerController();
+
+    const { ipDominio } = await configIpServerController.getConfigServerData();
     console.log('entrou aqui');
-    const filePath = this.getFilePath();
-    if (!fs.existsSync(filePath)) {
-      fs.writeFileSync(filePath, JSON.stringify({ ipDominio: '' }));
-    }
+    // const filePath = this.getFilePath();
+    // if (!fs.existsSync(filePath)) {
+    //   fs.writeFileSync(filePath, JSON.stringify({ ipDominio: '' }));
+    // }
 
-    const fileContent = fs.readFileSync(filePath);
+    // const fileContent = fs.readFileSync(filePath);
 
-    const { ipDominio } = JSON.parse(fileContent.toString());
+    // const { ipDominio } = JSON.parse(fileContent.toString());
 
     const baseURL = `http://${ipDominio}:8080`;
     const dominioApi = axios.create({ baseURL });
