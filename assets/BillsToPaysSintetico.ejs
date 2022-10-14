@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        /* outline: 0; */
+      }
+      body {
+        margin: 0;
+        font-size: 1.2rem;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .firstPage {
+        width: 100%;
+        height: 1650px;
+        display: flex;
+        align-items: center;
+      }
+      .contentFirsPage {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        gap: 50px;
+      }
+
+      .provider {
+        display: flex;
+        margin: 0 30px;
+        gap: 20px;
+      }
+    </style>
+    <title>Relatórios Contas a Pagar</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="firstPage">
+        <div class="contentFirsPage">
+          <h1 class="display-2 font-weight-bold">Relatório Contas a Pagar</h1>
+          <h2 class="display-5"><%= paymentsObj.dateOfCreate; %></h2>
+          <h3>Empresa: <span class="font-weight-bold"><%= paymentsObj.company.razao; %></h3></small>
+          <h3>Código: <span class="font-weight-bold"><%= paymentsObj.company.idEmp; %></h3></small>
+          <h3>Formato: <span class="font-weight-bold">Sintético</h3></small>
+          <h3>Posição em: <span class="font-weight-bold"><%= new Date(paymentsObj.date).toLocaleDateString() %></h3></small>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="d-flex justify-content-center mb-5">
+          <p><strong>CONTAS A PAGAR</strong></p>
+        </div>
+          <div class="m-4">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Cód. Fornecedor</th>
+                  <th scope="col">Nome Fornecedor</th>
+                  <th scope="col">Saldo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% paymentsObj.billsToPays.map((billsToPay) => { %>
+                <tr>
+                  <th scope="row"><%= billsToPay[0].codi_FOR %></th>
+                  <td><%= billsToPay[0].qry_forn %></td>
+                  <td><%= billsToPay.reduce((total, next) => total + next.vbru, 0).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}); %></td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+            <div class="d-flex flex-row">
+              <div>
+                <p><strong>Total: </strong><span><%= paymentsObj.total.toLocaleString('pt-br', {minimumFractionDigits: 2}); %></span></p>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

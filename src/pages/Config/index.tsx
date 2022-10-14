@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Button, Card, Col, Input, Row } from 'antd';
+import { Button, Card, Col, Input, notification, Row } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import React, { useEffect, useState } from 'react';
+import { remote } from 'electron';
+import path from 'path';
 import Sidebar from '../../components/Sidebar';
 import { ConfigService } from '../../services';
 
@@ -12,16 +14,30 @@ const Config = () => {
     const save = await ConfigService.saveIpDominio({
       ipServer,
     });
-    console.log(save);
+
+    if (save === 'feito') {
+      notification.success({
+        message: 'Feito!',
+        description: 'IP alterado com sucesso.',
+      });
+    } else {
+      notification.error({
+        message: 'Erro ao salvar',
+        description: save.data,
+      });
+    }
   }
 
   async function getServerDominio() {
     try {
       const response = await ConfigService.getIpDominio();
 
-      setIpServer(response.data.ipDominio);
+      setIpServer(response.ipDominio);
     } catch (error) {
-      console.log(error);
+      notification.error({
+        message: 'Erro ao Obter configurações',
+        description: `erro: ${error}`,
+      });
     }
   }
 
@@ -40,9 +56,13 @@ const Config = () => {
                 placeholder="ex: 192.168.0.1"
                 value={ipServer}
                 onChange={(e) => setIpServer(e.target.value)}
+                onKeyPress={(event) => {
+                  if (event.key === 'Enter') handleSaveIP();
+                }}
               />
             </Col>
           </Row>
+
           <Row>
             <Col
               span={8}

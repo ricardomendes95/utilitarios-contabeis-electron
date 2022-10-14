@@ -269,6 +269,12 @@ object-assign
  * MIT Licensed
  */
 
+/*!
+ * xlsx-json-js v1.0.0
+ * (c) 2019-2020 diyao<raojianb@mail2.sysu.edu.cn>
+ * Released under the MIT License.
+ */
+
 /*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
 
 /**
@@ -278,3 +284,7 @@ object-assign
  * @project EJS
  * @license {@link http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0}
  */
+
+//! moment.js
+
+//! moment.js locale configuration

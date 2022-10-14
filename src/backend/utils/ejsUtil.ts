@@ -6,22 +6,13 @@ export async function renderEjs(
   fileName: string,
   content: any
 ): Promise<string> {
-  // const filePath = path.join(
-  //   __dirname,
-  //   '..',
-  //   '..',
-  //   '..',
-  //   'api',
-  //   'src',
-  //   'templates',
-  //   fileDir,
-  //   fileName
-  // );
+
   const filePath = path.join(__dirname, '..', 'assets', fileName);
+  // const filePath = path.join(__dirname, '..', '..', '..', 'assets', fileName);
 
   return new Promise((resolve, reject) => {
     // @ts-ignore
-    ejs.renderFile(filePath, content, async (err: Error, data: any) => {
+    ejs.renderFile(filePath, content, (err: Error, data: any) => {
       if (err) {
         reject(err);
         return;

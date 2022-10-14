@@ -18,12 +18,11 @@ import {
 } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import React, { useState, FormEvent } from 'react';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 
 import 'moment/locale/pt-br';
 import locale from 'antd/es/date-picker/locale/pt_BR';
 import Search from 'antd/lib/input/Search';
-import { ipcRenderer } from 'electron';
 import Sidebar from '../../components/Sidebar';
 import { CartaResponsabilidadeService } from '../../services';
 import { ButtonDirectory, InputField, Left, Submite } from './style';
